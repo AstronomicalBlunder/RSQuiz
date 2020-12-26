@@ -1,0 +1,12 @@
+input.correct {
+	color: green;
+}
+input.incorrect {
+	color: red;
+}
+#poststuff .postbox .inside.quiz_admin h2 {
+	padding-left: 0;
+	font-weight:700;
+	margin-top: 10px;
+	border-top: 1px solid #eee;
+}
