@@ -1,0 +1,117 @@
+.quiz_question {
+	display:none;
+	width:75%;
+	float:left;
+}
+#results.quiz_question {
+	width:100%;
+}
+
+.quiz_question input[type="radio"], .quiz_question label {
+	display:inline-block;
+	margin:10px;
+	width:auto;
+	cursor:pointer;
+}
+
+.quiz_question label {
+	max-width: 90%;
+}
+
+.quiz_question input[type="radio"] {
+	vertical-align:top;
+	margin-top: 14px;
+}
+
+.quiz_question input[type="button"], .start_quiz {
+	padding:10px 20px;
+	margin:20px 30px 20px 0;
+	display:inline-block;
+	border-radius: 3px;
+	cursor:pointer;
+}
+.quiz_question input.confirm, .start_quiz{
+	color:#fff;
+	text-transform:uppercase;
+	font-weight:500;
+	transition: all 0.3s ease;
+}
+.quiz_question input.skip{
+	color: #fff;
+	text-transform:lowercase;
+	background-color:#F0F0F0 !important; 
+}
+.quiz_question input[type="button"]:hover, .start_quiz:hover {
+	background: #fff;
+	transition: all 0.3s ease;
+}
+.quiz_question input.skip:hover{
+	color: #fff;
+	text-transform:lowercase;
+}
+
+/**clock*/
+
+#clockdiv{
+	font-family: sans-serif;
+	color: #fff;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 30px;
+	margin-bottom:30px;
+	float:right;
+}
+
+#clockdiv > div{
+	padding: 10px;
+	border-radius: 3px;
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	border-radius: 3px;
+	background: #fff;
+	display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
+}
+
+#question_count_text {
+	display:none;
+	font-size: 15pt;
+	margin-top:5px;
+}
+
+#clockdiv.redalert > div{
+	background-color: red !important;
+}
+#clockdiv.redalert .hours, #clockdiv.redalert .minutes, #clockdiv.redalert .seconds {
+	color: red !important;
+}
+
+/*results*/
+
+#results span {
+	display:none;
+}
+
+#results_score {
+	text-align:center;
+}
+.presserly_quiz_counter {
+	font-size:30pt;
+	margin:30px;
+}
+.passfail {
+	display:none;
+	text-transform:uppercase;
+}
+#results.quiz_question {
+	text-align:center;
+}
+
