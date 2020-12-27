@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
 	}	
 		
 	if(answer == null){
-		presserly_quiz_null_confirmed();
+		quiz_null_confirmed();
 	}else{
 	
 	    presserly_quiz_save_quiz_answer(id, answer);
@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
 });
 
 
-function presserly_quiz_start_quiz_timer(mins){
+function start_quiz_timer(mins){
 
 	jQuery('.start_quiz').remove();
 	jQuery('#question_count_text').show();
@@ -54,12 +54,12 @@ function presserly_quiz_start_quiz_timer(mins){
 
 	var mins = mins;
 	var deadline = new Date(Date.parse(new Date()) + mins * 60 * 1000);
-	presserly_quiz_initializeClock('clockdiv', deadline);
+	initializeClock('clockdiv', deadline);
 
 }
 
 
-function presserly_quiz_getTimeRemaining(endtime) {
+function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
   var minutes = Math.floor((t / 1000 / 60) % 60);
@@ -77,12 +77,12 @@ function presserly_quiz_getTimeRemaining(endtime) {
 
 var timeinterval = '';
 
-function presserly_quiz_stop_the_clock(){
+function stop_the_clock(){
           clearInterval(timeinterval);
 		  jQuery('#clockdiv').hide();
 }  
 
-function presserly_quiz_initializeClock(id, endtime) {
+function initializeClock(id, endtime) {
   var clock = document.getElementById(id);
   var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
@@ -93,7 +93,7 @@ function presserly_quiz_initializeClock(id, endtime) {
  
 
   function presserly_quiz_updateClock() {
-    var t = presserly_quiz_getTimeRemaining(endtime);
+    var t = getTimeRemaining(endtime);
 
     daysSpan.innerHTML = t.days;
     hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
@@ -111,12 +111,12 @@ function presserly_quiz_initializeClock(id, endtime) {
   
   timeinterval = setInterval(presserly_quiz_updateClock, 1000);
 
-  presserly_quiz_updateClock();
+  presserly_quiz_updateClock();sta
 }
 
 
 function presserly_quiz_over(redirect){
-	presserly_quiz_stop_the_clock();
+	stop_the_clock();
 	jQuery('.quiz_question').hide();
 	jQuery('.start_quiz').hide();
 	jQuery('#text_before_'+redirect).show();
