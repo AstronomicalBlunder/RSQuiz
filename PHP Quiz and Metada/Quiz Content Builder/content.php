@@ -1,8 +1,8 @@
 <?php
 
 /*add quiz to content for single quiz and hide content from single quiz-results*/
-add_filter( 'the_content', 'presserly_quiz_content' ); 
-function presserly_quiz_content($content){
+add_filter( 'the_content', 'quiz_content' ); 
+function quiz_content($content){
 
 	ob_start();  
 
