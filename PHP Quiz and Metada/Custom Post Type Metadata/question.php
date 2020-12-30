@@ -10,7 +10,7 @@ add_action( 'add_meta_boxes_quiz-questions', 'questions_add_meta_boxes' );
 function question_build_meta_box( $post ){
 	wp_nonce_field( basename( __FILE__ ), 'question_meta_box_nonce' );
 	
-    $fields = presserly_quiz_question_fields();
+    $fields = quiz_question_fields();
   
   echo '<div class="inside">';
   
