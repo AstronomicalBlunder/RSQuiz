@@ -2,13 +2,13 @@
 /*QUESTION CUSTOM POST TYPE*/
 
 /*meta boxes for questions*/
-function presserly_quiz_questions_add_meta_boxes( $post ){
-	add_meta_box( 'presserly_question_meta_box', __( 'Answers', 'quiz-questions' ), 'presserly_quiz_question_build_meta_box', 'quiz-questions', 'normal', 'high' );
+function questions_add_meta_boxes( $post ){
+	add_meta_box( 'question_meta_box', __( 'Answers', 'quiz-questions' ), 'question_build_meta_box', 'quiz-questions', 'normal', 'high' );
 }
-add_action( 'add_meta_boxes_quiz-questions', 'presserly_quiz_questions_add_meta_boxes' );
+add_action( 'add_meta_boxes_quiz-questions', 'questions_add_meta_boxes' );
 
-function presserly_quiz_question_build_meta_box( $post ){
-	wp_nonce_field( basename( __FILE__ ), 'presserly_quiz_question_meta_box_nonce' );
+function question_build_meta_box( $post ){
+	wp_nonce_field( basename( __FILE__ ), 'question_meta_box_nonce' );
 	
     $fields = presserly_quiz_question_fields();
   
@@ -40,8 +40,8 @@ function presserly_quiz_question_build_meta_box( $post ){
 <?php
 }
 
-function presserly_quiz_question_save_meta_boxes_data( $post_id ){
-	if ( !isset( $_POST['presserly_quiz_question_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['presserly_quiz_question_meta_box_nonce'], basename( __FILE__ ) ) ){
+function question_save_meta_boxes_data( $post_id ){
+	if ( !isset( $_POST['question_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['question_meta_box_nonce'], basename( __FILE__ ) ) ){
 		return;
 	}
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
@@ -51,7 +51,7 @@ function presserly_quiz_question_save_meta_boxes_data( $post_id ){
 		return;
 	}	
   
-    $fields = presserly_quiz_question_fields();
+    $fields = quiz_question_fields();
 
   foreach ($fields as $field => $type){
     $slug = strtolower(str_replace(" ", "-", $field));
@@ -60,7 +60,7 @@ function presserly_quiz_question_save_meta_boxes_data( $post_id ){
 		
 	}
 }
-add_action( 'save_post_quiz-questions', 'presserly_quiz_question_save_meta_boxes_data', 10, 2 );
+add_action( 'save_post_quiz-questions', 'question_save_meta_boxes_data', 10, 2 );
 
 /*change title field for cpts*/
 function presserly_random_quiz_change_title_text( $title ){
@@ -76,7 +76,7 @@ function presserly_random_quiz_change_title_text( $title ){
 add_filter( 'enter_title_here', 'presserly_random_quiz_change_title_text' );
 
 /*core function to get question field array*/
-function presserly_quiz_question_fields(){
+function quiz_question_fields(){
 
 	$maxanswers  = 10;
 	$i = 0;
@@ -97,13 +97,13 @@ return $fields;
 
 
 /*is question correct*/
-function presserly_quiz_get_quiz_score($answers){
+function get_quiz_score($answers){
 
 $number_correct = 0;
 
 	foreach($answers as $key => $value){
 	
-		$correct = presserly_quiz_question_correct($key, $value);
+		$correct = quiz_question_correct($key, $value);
 		
 		if($correct == 'correct'){
 			$number_correct++;
@@ -116,9 +116,9 @@ return $number_correct;
 }
 
 /*check if specific question is correct*/
-function presserly_quiz_question_correct($key, $input){
+function quiz_question_correct($key, $input){
 	$correct_answers = array();
-
+	
 	$answer_meta = get_post_meta($key);
 	
 	$maxanswers  = 10;
