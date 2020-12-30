@@ -14,7 +14,7 @@ function presserly_quiz_content($content){
 	
 	}else if( $post->post_type == 'random-timed-quiz'  && is_main_query() && is_single() && in_the_loop() ){
 	
-	$content = $content . presserly_random_quiz_builder($post);
+	$content = $content . quiz_builder($post);
 	
 	}
 	
@@ -39,13 +39,13 @@ add_action('wp_head', 'presserly_quiz_noindex_for_results');
 
 
 /*shortcode returns quiz content*/
-function presserly_random_timed_quiz_sc($atts){
+function `($atts){
 	$post = get_post($atts['id']);
-	return presserly_random_quiz_builder($post);
+	return quiz_builder($post);
 }
 
 /*build quiz content*/
-function presserly_random_quiz_builder($post){
+function quiz_builder($post){
 
 $meta = get_post_meta($post->ID, '', true);
 
@@ -127,7 +127,7 @@ $userid = get_current_user_id();
 		$k = str_replace('question_category_count_', '', $key);
 		$categoryid = $meta['question_category_' . $k][0];
 		
-		$questions = array_merge(presserly_quiz_get_quiz_questions($categoryid, $qcount, $questions), $questions);
+		$questions = array_merge(get_quiz_questions($categoryid, $qcount, $questions), $questions);
 		
 		}
 	}
@@ -142,7 +142,7 @@ $userid = get_current_user_id();
 	/*use qids to make questions*/
 	$qhtml = '';
 	foreach($questions as $question){
-	$qhtml.= presserly_quiz_get_quiz_question_box($question, $post->ID);
+	$qhtml.= get_question_box($question, $post->ID);
 	}
 	
 	/**results page*/
@@ -260,7 +260,7 @@ $userid = get_current_user_id();
 	}
 }
 
-function presserly_quiz_get_quiz_questions($categoryid, $qcount, $questions_list){
+function get_quiz_questions($categoryid, $qcount, $questions_list){
 
 	$qs = array();
 
@@ -287,7 +287,7 @@ return $qs;
 }
 
 /*build question and answers*/
-function presserly_quiz_get_quiz_question_box($question, $quizid){
+function get_question_box($question, $quizid){
 	
 	$meta = get_post_meta($quizid, '', true);
 	
