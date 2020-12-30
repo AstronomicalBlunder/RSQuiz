@@ -39,7 +39,7 @@ add_action('wp_head', 'presserly_quiz_noindex_for_results');
 
 
 /*shortcode returns quiz content*/
-function `($atts){
+function ($atts){
 	$post = get_post($atts['id']);
 	return quiz_builder($post);
 }
