@@ -2,13 +2,13 @@
 /*RESULTS CUSTOM POST TYPE*/
 
 /*meta boxes for results*/
-function presserly_quiz_results_add_meta_boxes( $post ){
-	add_meta_box( 'presserly_result_meta_box', __( 'Results', 'quiz-results' ), 'presserly_quiz_result_build_meta_box', 'quiz-results', 'normal', 'high' );
+function results_add_meta_boxes( $post ){
+	add_meta_box( 'presserly_result_meta_box', __( 'Results', 'quiz-results' ), 'result_build_meta_box', 'quiz-results', 'normal', 'high' );
 }
-add_action( 'add_meta_boxes_quiz-results', 'presserly_quiz_results_add_meta_boxes' );
+add_action( 'add_meta_boxes_quiz-results', 'results_add_meta_boxes' );
 
-function presserly_quiz_result_build_meta_box( $post ){
-	wp_nonce_field( basename( __FILE__ ), 'presserly_quiz_result_build_meta_box_nonce' );
+function result_build_meta_box( $post ){
+	wp_nonce_field( basename( __FILE__ ), 'result_build_meta_box_nonce' );
 	
 	
 	$meta = get_post_meta( $post->ID);
@@ -40,7 +40,7 @@ function presserly_quiz_result_build_meta_box( $post ){
 	
 			if(is_numeric($key)){
 			$label = get_the_title($key);
-			$class = presserly_quiz_question_correct($key, $input);
+			$class = quiz_question_correct($key, $input);
 			}
 	
  	?>
@@ -101,7 +101,7 @@ if($_POST['submitted'] == '1'){
 
 	$id = $_POST['id'];
 
-	presserly_quiz_write_csv($id);
+	quiz_write_csv($id);
 
 echo 'sent';
 
@@ -129,7 +129,7 @@ echo '<input type="hidden" value="1" name="submitted"><input type="submit" value
 }
 
 /*write results to csv format*/
-function presserly_quiz_write_csv($id){
+function quiz_write_csv($id){
 
 $data = array();
 $i = 0;
@@ -182,7 +182,7 @@ $i = 0;
 				$data[$i][] = $input;
 		
 				/*check if correct*/
-				$data[$i][] = presserly_quiz_question_correct($key, $input);
+				$data[$i][] = quiz_question_correct($key, $input);
 		
 				}else{
 				$data[$i][] = $input;
