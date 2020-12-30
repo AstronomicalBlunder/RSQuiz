@@ -166,7 +166,7 @@ $userid = get_current_user_id();
 	success:function(data){
 	
 		if(data.trim() == 'complete'){
-			presserly_quiz_save_quiz('complete_redirect');  
+			save_quiz('complete_redirect');  
 		}
 	}
 	});
@@ -174,7 +174,7 @@ $userid = get_current_user_id();
 	}
 	
 	
-	function presserly_quiz_save_quiz(type){
+	function save_quiz(type){
 	var redirect = type;	
 	
 	var homeurl = '<?php echo get_home_url(); ?>';
@@ -183,13 +183,13 @@ $userid = get_current_user_id();
 	jQuery.ajax({
 	type:"POST",
 	url: ajaxurl,
-	data: ({action : 'presserly_quiz_save_quiz' }),
+	data: ({action : 'save_quiz' }),
 	success:function(data){
 
 		if(redirect == 'timeout_redirect'){
-			presserly_quiz_timeout_redirect();
+			quiz_timeout_redirect();
 		}else if(redirect == 'complete_redirect'){
-			presserly_quiz_complete_redirect();	
+			quiz_complete_redirect();	
 		}
 		
 			var show = '<?php echo $meta['show_score_after_last_question_answered'][0]; ?>';		
@@ -222,7 +222,7 @@ $userid = get_current_user_id();
 	
 	}
 
-	function presserly_quiz_complete_redirect(){
+	function quiz_complete_redirect(){
 		var redirect = '<?php echo $meta['redirect_to_page_once_complete'][0]; ?>';
 		if(redirect > 0){
 		var link = '<?php echo get_permalink($meta['redirect_to_page_once_complete'][0]); ?>';
@@ -230,7 +230,7 @@ $userid = get_current_user_id();
 		}
 	}
 	
-	function presserly_quiz_timeout_redirect(){
+	function quiz_timeout_redirect(){
 		
 		var redirect = '<?php echo $meta['redirect_to_page_on_timeout'][0]; ?>';
 		if(redirect > 0){
@@ -240,7 +240,7 @@ $userid = get_current_user_id();
 
 	}
 	
-	function presserly_quiz_null_confirmed(){
+	function quiz_null_confirmed(){
 
 		var message = '<?php echo $meta['message_when_no_answer_is_selected'][0]; ?>';	
 		if(message){
