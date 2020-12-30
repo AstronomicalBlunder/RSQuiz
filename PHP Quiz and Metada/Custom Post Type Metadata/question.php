@@ -63,7 +63,7 @@ function question_save_meta_boxes_data( $post_id ){
 add_action( 'save_post_quiz-questions', 'question_save_meta_boxes_data', 10, 2 );
 
 /*change title field for cpts*/
-function presserly_random_quiz_change_title_text( $title ){
+function quiz_change_title_text( $title ){
      $screen = get_current_screen();
   
      if  ( 'quiz-questions' == $screen->post_type ) {
@@ -73,7 +73,7 @@ function presserly_random_quiz_change_title_text( $title ){
      return $title;
 }
   
-add_filter( 'enter_title_here', 'presserly_random_quiz_change_title_text' );
+add_filter( 'enter_title_here', 'quiz_change_title_text' );
 
 /*core function to get question field array*/
 function quiz_question_fields(){
