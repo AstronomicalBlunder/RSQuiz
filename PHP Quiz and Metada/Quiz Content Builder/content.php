@@ -28,14 +28,14 @@ function presserly_quiz_content($content){
 
 
 /*no index nofollow on quiz results to block indexing*/
-function presserly_quiz_noindex_for_results(){
+function quiz_noindex_for_results(){
 	global $post;
 
     if ( $post->post_type == 'quiz-results' ) {
         echo '<meta name="robots" content="noindex, follow">';
     }
 }
-add_action('wp_head', 'presserly_quiz_noindex_for_results');
+add_action('wp_head', 'quiz_noindex_for_results');
 
 
 /*shortcode returns quiz content*/
@@ -298,7 +298,7 @@ function get_question_box($question, $quizid){
 	if($qcontent){$qcontent = '<p>'.$qcontent.'</p>';}
 
 	echo '<div class="quiz_question" id="'.$question.'"><h3>'. get_the_title($question) . '</h3>' . $qcontent;
-	$answers = presserly_quiz_get_quiz_answer_options($question);
+	$answers = get_quiz_answer_options($question);
 	/*randomize answers*/
 	if(get_post_meta($quizid, 'display_answer_options_in_random_order', true) == 'on'){
 	shuffle($answers);
@@ -321,7 +321,7 @@ function get_question_box($question, $quizid){
 }
 
 /*return answer options*/
-function presserly_quiz_get_quiz_answer_options($question){
+function get_quiz_answer_options($question){
 
 	$maxanswers  = 10;
 	$i = 0;
