@@ -151,7 +151,7 @@ $userid = get_current_user_id();
 	<script>
 
 	
-	function presserly_quiz_save_quiz_answer(question_id, answer_value){
+	function save_quiz_answer(question_id, answer_value){
 
 	var question_id = question_id;
 	var answer_value = answer_value;
