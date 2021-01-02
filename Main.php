@@ -7,48 +7,48 @@ Plugin Name: RS Math Quiz
 Description: Create math quizzes
 
 */
-function presserly_random_timed_quiz_scripts()
+function quiz_scripts()
 {
     
     $plugin_url = plugin_dir_url(__FILE__);
-    wp_enqueue_style('presserly_random_timed_quiz_css', $plugin_url . 'sty/style.css');
-    wp_enqueue_script('presserly_random_timed_quiz_js', $plugin_url . 'js/quiz.js');
+    wp_enqueue_style('quiz_css', $plugin_url . 'CSS_custom/style.css');
+    wp_enqueue_script('quiz_js', $plugin_url . 'JQuery_JS_Functions/quiz.js');
     
 }
 
 /*wp-admin styles*/
-function presserly_random_timed_quiz_admin_scripts()
+function admin_scripts()
 {
     
     $plugin_url = plugin_dir_url(__FILE__);
-    wp_enqueue_style('presserly_random_timed_quiz_css', $plugin_url . 'style/admin.css');
+    wp_enqueue_style('quiz_css', $plugin_url . 'CSS_custom/admin.css');
     
 }
 
 /*add shortcodes*/
-add_action('init', 'presserly_random_timed_quiz_init');
-function presserly_random_timed_quiz_init()
+add_action('init', 'quiz_init');
+function quiz_init()
 {
     // Turn off shortcode display in Gutenberg
     if(!is_admin()) {
-    add_shortcode('random_timed_quiz', 'presserly_random_timed_quiz_sc');
-    add_shortcode('random_timed_quiz_results', 'presserly_random_timed_quiz_results_sc');
+    add_shortcode('random_timed_quiz', 'quiz_sc');
+    add_shortcode('random_timed_quiz_results', 'quiz_results_sc');
 	}
-    add_action('wp_enqueue_scripts', 'presserly_random_timed_quiz_scripts');
-    add_action('admin_enqueue_scripts', 'presserly_random_timed_quiz_admin_scripts');
+    add_action('wp_enqueue_scripts', 'quiz_scripts');
+    add_action('admin_enqueue_scripts', 'admin_scripts');
     
 }
 
 /*post type for quizzes and questions*/
-function presserly_random_timed_quiz_post_type()
+function quiz_post_type()
 {
     register_post_type('random-timed-quiz', array(
         'labels' => array(
             'name' => __('Quiz'),
             'singular_name' => __('Quiz'),
-            'add_new_item' => __('Add New Quiz', 'presserly-random-timed-quiz'),
-            'new_item' => __('New Quiz', 'presserly-random-timed-quiz'),
-            'edit_item' => __('Edit Quiz', 'presserly-random-timed-quiz')
+            'add_new_item' => __('Add New Quiz', 'compsci-ia'),
+            'new_item' => __('New Quiz', 'compsci-ia'),
+            'edit_item' => __('Edit Quiz', 'compsci-ia')
         ),
         'public' => true,
         'has_archive' => false,
@@ -62,9 +62,9 @@ function presserly_random_timed_quiz_post_type()
         'labels' => array(
             'name' => __('Quiz Questions'),
             'singular_name' => __('Question'),
-            'add_new_item' => __('Add New Question', 'presserly-random-timed-quiz'),
-            'new_item' => __('New Question', 'presserly-random-timed-quiz'),
-            'edit_item' => __('Edit Question', 'presserly-random-timed-quiz')
+            'add_new_item' => __('Add New Question', 'compsci-ia'),
+            'new_item' => __('New Question', 'compsci-ia'),
+            'edit_item' => __('Edit Question', 'compsci-ia')
         ),
         'public' => true,
         'has_archive' => false,
@@ -84,9 +84,9 @@ function presserly_random_timed_quiz_post_type()
         'labels' => array(
             'name' => __('Quiz Results'),
             'singular_name' => __('Quiz result'),
-            'add_new_item' => __('Add New Quiz Result', 'presserly-random-timed-quiz'),
-            'new_item' => __('New result', 'presserly-random-timed-quiz'),
-            'edit_item' => __('Edit Quiz result', 'presserly-random-timed-quiz')
+            'add_new_item' => __('Add New Quiz Result', 'compsci-ia'),
+            'new_item' => __('New result', 'compsci-ia'),
+            'edit_item' => __('Edit Quiz result', 'compsci-ia')
         ),
         'public' => true,
         'has_archive' => false,
@@ -97,7 +97,7 @@ function presserly_random_timed_quiz_post_type()
         
     ));
 }
-add_action('init', 'presserly_random_timed_quiz_post_type');
+add_action('init', 'quiz_post_type');
 
 /*taxonomy for question categories and results in quiz category*/
 function presserly_random_timed_quiz_tax()
@@ -124,7 +124,7 @@ function presserly_random_timed_quiz_tax()
 add_action('init', 'presserly_random_timed_quiz_tax');
 
 /*function for session timings*/
-function presserly_quiz_register_session()
+function register_session()
 {
 
 		if (!session_id()){
@@ -137,7 +137,7 @@ function presserly_quiz_register_session()
 function presserly_start_quiz()
 {
 
-	presserly_quiz_register_session();
+	register_session();
 
     
     $_SESSION['quiz_qanda']                    = array();
@@ -155,10 +155,10 @@ add_action('wp_ajax_presserly_start_quiz', 'presserly_start_quiz');
 add_action('wp_ajax_nopriv_presserly_start_quiz', 'presserly_start_quiz');
 
 /*function for session results submited*/
-function presserly_quiz_save_answer()
+function save_answer()
 {
 
-	presserly_quiz_register_session();
+	register_session();
     
     $user_id = get_current_user_id();
     
@@ -174,14 +174,14 @@ function presserly_quiz_save_answer()
     }
     die();
 }
-add_action('wp_ajax_presserly_quiz_save_answer', 'presserly_quiz_save_answer');
-add_action('wp_ajax_nopriv_presserly_quiz_save_answer', 'presserly_quiz_save_answer');
+add_action('wp_ajax_presserly_quiz_save_answer', 'save_answer');
+add_action('wp_ajax_nopriv_presserly_quiz_save_answer', 'save_answer');
 
 /*function for saving session*/
-function presserly_quiz_save_quiz()
+function save_quiz()
 {
 
-	presserly_quiz_register_session();
+	register_session();
     
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
@@ -280,14 +280,14 @@ function presserly_quiz_save_quiz()
     
     die();
 }
-add_action('wp_ajax_presserly_quiz_save_quiz', 'presserly_quiz_save_quiz');
-add_action('wp_ajax_nopriv_presserly_quiz_save_quiz', 'presserly_quiz_save_quiz');
+add_action('wp_ajax_presserly_quiz_save_quiz', 'save_quiz');
+add_action('wp_ajax_nopriv_presserly_quiz_save_quiz', 'save_quiz');
 
 //return results stored for use in shortcode
-function presserly_random_timed_quiz_results_sc()
+function quiz_results_sc()
 {
 
-	presserly_quiz_register_session();
+	register_session();
     
     if ($_SESSION['quiz_results']) {
         $data = $_SESSION['quiz_results'];
@@ -300,7 +300,7 @@ function presserly_random_timed_quiz_results_sc()
 }
 
 /*add results summary to dashboard*/
-function presserly_random_quiz_dashboard_widget_function($post, $callback_args)
+function dashboard_widget($post, $callback_args)
 {
     
     /*for each quiz count number of posts and number of pass meta*/
@@ -334,27 +334,27 @@ function presserly_random_quiz_dashboard_widget_function($post, $callback_args)
 }
 
 // Function used in the action hook
-function presserly_random_quiz_add_dashboard_widgets()
+function add_dashboard_widgets()
 {
-    wp_add_dashboard_widget('presserly_random_quiz_dashboard_widget', 'Quiz Results', 'presserly_random_quiz_dashboard_widget_function');
+    wp_add_dashboard_widget('presserly_random_quiz_dashboard_widget', 'Quiz Results', 'dashboard_widget');
 }
 
 // Register the new dashboard widget with the 'wp_dashboard_setup' action
-add_action('wp_dashboard_setup', 'presserly_random_quiz_add_dashboard_widgets');
+add_action('wp_dashboard_setup', 'add_dashboard_widgets');
 
 /*add_submenu_page for instructions*/
-function presserly_random_quiz_admin_actions()
+function admin_actions()
 {
     
-    add_submenu_page('edit.php?post_type=random-timed-quiz', __('Get started', 'get-started'), __('Get started', 'get-started'), 'manage_options', 'get-started', 'presserly_quiz_get_started');
+    add_submenu_page('edit.php?post_type=random-timed-quiz', __('Get started', 'get-started'), __('Get started', 'get-started'), 'manage_options', 'get-started', 'get_started');
     add_submenu_page('edit.php?post_type=random-timed-quiz', __('Download results', 'download-results'), __('Download results', 'download-results'), 'manage_options', 'download-results', 'presserly_quiz_download_results');
     
 }
-add_action('admin_menu', 'presserly_random_quiz_admin_actions');
+add_action('admin_menu', 'admin_actions');
 
 
 /*add some helpful notes in to wp-admin*/
-function presserly_quiz_get_started()
+function get_started()
 {
 ?>
 <h1>How to build a random timed quiz</h1>
