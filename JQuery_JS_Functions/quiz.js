@@ -16,7 +16,7 @@ jQuery(document).ready(function() {
 		quiz_null_confirmed();
 	}else{
 	
-	    presserly_quiz_save_quiz_answer(id, answer);
+	    save_quiz_answer(id, answer);
 		
 		/*increase question count*/
 		jQuery('#current_question').html( +jQuery('#current_question').html() + +1);
