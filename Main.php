@@ -100,7 +100,7 @@ function quiz_post_type()
 add_action('init', 'quiz_post_type');
 
 /*taxonomy for question categories and results in quiz category*/
-function presserly_random_timed_quiz_tax()
+function category_taxonomy()
 {
     register_taxonomy('question-category', 'quiz-questions', array(
         'label' => __('Question category'),
@@ -111,6 +111,15 @@ function presserly_random_timed_quiz_tax()
         'show_ui' => true,
         'show_admin_column' => true
     ));
+	
+    $categories = array('number-theory', 'algebra', 'geometry', 'combinatorics', 'misc');
+    foreach ($categories as $value){
+	 wp_insert_term($value, 'question-category');
+	 wp_insert_term($value .'easy', 'question-category', array('parent' => term_exists($value)));
+	 wp_insert_term($value .'medium', 'question-category', array('parent' => term_exists($value)));
+	 wp_insert_term($value .'hard', 'question-category', array('parent' => term_exists($value)));
+     }
+
     register_taxonomy('quiz-category', 'quiz-results', array(
         'label' => __('Quiz category'),
         'rewrite' => array(
@@ -121,7 +130,7 @@ function presserly_random_timed_quiz_tax()
         'show_admin_column' => true
     ));
 }
-add_action('init', 'presserly_random_timed_quiz_tax');
+add_action('init', 'category_taxonomy');
 
 /*function for session timings*/
 function register_session()
@@ -134,7 +143,7 @@ function register_session()
 }
 
 /*function for session results submited*/
-function presserly_start_quiz()
+function start_quiz()
 {
 
 	register_session();
@@ -151,8 +160,8 @@ function presserly_start_quiz()
     
     die();
 }
-add_action('wp_ajax_presserly_start_quiz', 'presserly_start_quiz');
-add_action('wp_ajax_nopriv_presserly_start_quiz', 'presserly_start_quiz');
+add_action('wp_ajax_start_quiz', 'start_quiz');
+add_action('wp_ajax_nopriv_start_quiz', 'start_quiz');
 
 /*function for session results submited*/
 function save_answer()
@@ -174,8 +183,8 @@ function save_answer()
     }
     die();
 }
-add_action('wp_ajax_presserly_quiz_save_answer', 'save_answer');
-add_action('wp_ajax_nopriv_presserly_quiz_save_answer', 'save_answer');
+add_action('wp_ajax_save_answer', 'save_answer');
+add_action('wp_ajax_nopriv_save_answer', 'save_answer');
 
 /*function for saving session*/
 function save_quiz()
@@ -255,19 +264,17 @@ function save_quiz()
             }
             
             $email_array = explode(",", $to);
+	    $email = $email_array[0];
+	    $send = trim($email);
             
-            $subject = 'A quiz has been taken';
+            $subject = $user_name . 'math quiz results';
             
             $url = get_option('home') . '/wp-admin/post.php?post=' . $post_id . '&action=edit';
             
-            $message = "A new quiz has been taken.  You can view the results here: \r\n\r\n" . $url;
+            $message = "A new quiz has been taken by this student.  You can view the results here: \r\n\r\n" . $url;
             
-            foreach ($email_array as $email) {
-                if ($email) {
-                    $send = trim($email);
-                    $response = wp_mail($send, $subject, $message);
-                }
-            }
+	    $response = wp_mail($send, $subject, $message);
+            
         }
         
     }
