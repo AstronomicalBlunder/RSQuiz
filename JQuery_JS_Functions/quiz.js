@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 		jQuery(this).parent().next().show();
 		
 		if(jQuery(this).parent().next().attr('id') == 'results' ){
-			presserly_quiz_over('complete_redirect');		
+			quiz_over('complete_redirect');		
 		}
 		
 	}	
@@ -35,8 +35,8 @@ jQuery(document).ready(function() {
 	
 	/*detect browser close*/
 	jQuery( window ).unload(function() {
-		presserly_quiz_save_quiz();  
-		presserly_quiz_over();		
+		save_quiz();  
+		quiz_over();		
 
 	});	
 	
@@ -102,7 +102,7 @@ function initializeClock(id, endtime) {
 
     if (t.total <= 0) {
         clearInterval(timeinterval);
-	    presserly_quiz_over('timeout_redirect');
+	    quiz_over('timeout_redirect');
     }else if((t.total/1000) == redalert){
 		jQuery('#clockdiv').addClass('redalert');
 	}
@@ -115,7 +115,7 @@ function initializeClock(id, endtime) {
 }
 
 
-function presserly_quiz_over(redirect){
+function quiz_over(redirect){
 	stop_the_clock();
 	jQuery('.quiz_question').hide();
 	jQuery('.start_quiz').hide();
