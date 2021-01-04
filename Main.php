@@ -287,8 +287,8 @@ function save_quiz()
     
     die();
 }
-add_action('wp_ajax_presserly_quiz_save_quiz', 'save_quiz');
-add_action('wp_ajax_nopriv_presserly_quiz_save_quiz', 'save_quiz');
+add_action('wp_ajax_save_quiz', 'save_quiz');
+add_action('wp_ajax_nopriv_save_quiz', 'save_quiz');
 
 //return results stored for use in shortcode
 function quiz_results_sc()
@@ -343,7 +343,7 @@ function dashboard_widget($post, $callback_args)
 // Function used in the action hook
 function add_dashboard_widgets()
 {
-    wp_add_dashboard_widget('presserly_random_quiz_dashboard_widget', 'Quiz Results', 'dashboard_widget');
+    wp_add_dashboard_widget('math_quiz_dashboard_widget', 'Quiz Results', 'dashboard_widget');
 }
 
 // Register the new dashboard widget with the 'wp_dashboard_setup' action
@@ -354,7 +354,7 @@ function admin_actions()
 {
     
     add_submenu_page('edit.php?post_type=random-timed-quiz', __('Get started', 'get-started'), __('Get started', 'get-started'), 'manage_options', 'get-started', 'get_started');
-    add_submenu_page('edit.php?post_type=random-timed-quiz', __('Download results', 'download-results'), __('Download results', 'download-results'), 'manage_options', 'download-results', 'presserly_quiz_download_results');
+    add_submenu_page('edit.php?post_type=random-timed-quiz', __('Download results', 'download-results'), __('Download results', 'download-results'), 'manage_options', 'download-results', 'download_results');
     
 }
 add_action('admin_menu', 'admin_actions');
@@ -405,7 +405,7 @@ each test includes the same number of chemistry, biology and physics questions.<
 <?php
 }
 
-function presserly_quiz_user_profile_fields($user)
+function user_profile_fields($user)
 {
 ?>
  
@@ -447,11 +447,11 @@ function presserly_quiz_user_profile_fields($user)
   </table>
 <?php
 }
-add_action('show_user_profile', 'presserly_quiz_user_profile_fields');
-add_action('edit_user_profile', 'presserly_quiz_user_profile_fields');
+add_action('show_user_profile', 'user_profile_fields');
+add_action('edit_user_profile', 'user_profile_fields');
 
 /*SAVE EXTRA FIELDS*/
-function presserly_quiz_save_extra_profile_fields($user_id)
+function save_extra_profile_fields($user_id)
 {
     
     if (!current_user_can('edit_user', $user_id))
@@ -469,20 +469,20 @@ function presserly_quiz_save_extra_profile_fields($user_id)
         update_usermeta($user_id, $key, $value);
     }
 }
-add_action('edit_user_profile_update', 'presserly_quiz_save_extra_profile_fields');
-add_action('personal_options_update', 'presserly_quiz_save_extra_profile_fields');
+add_action('edit_user_profile_update', 'save_extra_profile_fields');
+add_action('personal_options_update', 'save_extra_profile_fields');
 
 
 // ADD NEW COLUMNS FOR RESULTS POSTS
-function presserly_quiz_columns_head($defaults)
+function quiz_columns_head($defaults)
 {
     $defaults['quiz-name'] = 'Quiz name';
     
     return $defaults;
 }
-add_filter('manage_quiz-results_posts_columns', 'presserly_quiz_columns_head');
+add_filter('manage_quiz-results_posts_columns', 'quiz_columns_head');
 
-function presserly_quiz_columns_content($column_name, $post_ID)
+function quiz_columns_content($column_name, $post_ID)
 {
     if ($column_name == 'quiz-name') {
         $quiz = get_post_meta($post_ID, 'prtq_quizid', true);
@@ -491,18 +491,18 @@ function presserly_quiz_columns_content($column_name, $post_ID)
         }
     }
 }
-add_action('manage_quiz-results_posts_custom_column', 'presserly_quiz_columns_content', 10, 2);
+add_action('manage_quiz-results_posts_custom_column', 'quiz_columns_content', 10, 2);
 
-add_filter('manage_edit-quiz-results_sortable_columns', 'presserly_quiz_sortable_columns');
+add_filter('manage_edit-quiz-results_sortable_columns', 'quiz_sortable_columns');
 /*make columns sortable*/
-function presserly_quiz_sortable_columns($columns)
+function quiz_sortable_columns($columns)
 {
     $columns['quiz-name'] = 'quiz-name';
     return $columns;
 }
 
-add_filter('manage_quiz-results_posts_columns', 'presserly_quiz_results_column_order');
-function presserly_quiz_results_column_order($columns)
+add_filter('manage_quiz-results_posts_columns', 'results_column_order');
+function results_column_order($columns)
 {
     $n_columns = array();
     $move      = 'quiz-name'; // what to move
