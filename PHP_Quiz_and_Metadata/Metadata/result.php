@@ -3,7 +3,7 @@
 
 /*meta boxes for results*/
 function results_add_meta_boxes( $post ){
-	add_meta_box( 'presserly_result_meta_box', __( 'Results', 'quiz-results' ), 'result_build_meta_box', 'quiz-results', 'normal', 'high' );
+	add_meta_box( 'result_meta_box', __( 'Results', 'quiz-results' ), 'result_build_meta_box', 'quiz-results', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes_quiz-results', 'results_add_meta_boxes' );
 
@@ -59,8 +59,8 @@ function result_build_meta_box( $post ){
 <?php
 }
 
-function presserly_quiz_result_save_meta_boxes_data( $post_id ){
-	if ( !isset( $_POST['presserly_quiz_result_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['presserly_quiz_result_meta_box_nonce'], basename( __FILE__ ) ) ){
+function save_meta_boxes_data( $post_id ){
+	if ( !isset( $_POST['result_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['result_meta_box_nonce'], basename( __FILE__ ) ) ){
 		return;
 	}
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
@@ -79,18 +79,18 @@ function presserly_quiz_result_save_meta_boxes_data( $post_id ){
 		
 	}
 }
-add_action( 'save_post_quiz-results', 'presserly_quiz_result_save_meta_boxes_data', 10, 2 );
+add_action( 'save_post_quiz-results', 'save_meta_boxes_data', 10, 2 );
 
 
-function presserly_quiz_remove_publish_box() {
+function remove_publish_box() {
     remove_meta_box( 'submitdiv', 'quiz-results', 'side' );
 	remove_meta_box( 'tagsdiv-quiz-category', 'quiz-results', 'side' );
 }
-add_action( 'admin_menu', 'presserly_quiz_remove_publish_box' );
+add_action( 'admin_menu', 'remove_publish_box' );
 
 
 /*download csv of results*/
-function presserly_quiz_download_results(){
+function download_results(){
 
 ?>
 <form action="" method="post">
