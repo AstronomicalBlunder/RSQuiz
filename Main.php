@@ -1,5 +1,4 @@
 
-application/x-httpd-php presserly_random_timed_quiz.php ( PHP script text )
 <?php
 /* 
 Plugin Name: RS Math Quiz
@@ -516,8 +515,8 @@ function results_column_order($columns)
     return $n_columns;
 }
 
-add_action('pre_get_posts', 'presserly_quiz_custom_orderby');
-function presserly_quiz_custom_orderby($query)
+add_action('pre_get_posts', 'custom_orderby');
+function custom_orderby($query)
 {
     if (!is_admin())
         return;
@@ -530,8 +529,8 @@ function presserly_quiz_custom_orderby($query)
     }
 }
 
-/*Add a quick start link to the plugins page*/
-function presserly_quiz_settings_link($links)
+/*Add a quick start link to the plugin's page*/
+function quiz_settings_link($links)
 {
     $settings_link = '<a href="/wp-admin/edit.php?post_type=random-timed-quiz&page=get-started">' . __('Quick start guide') . '</a>';
     array_push($links, $settings_link);
@@ -541,9 +540,9 @@ $plugin = plugin_basename(__FILE__);
 add_filter("plugin_action_links_$plugin", 'presserly_quiz_settings_link');
 
 
-include 'cpt_meta/quiz.php';
-include 'cpt_meta/question.php';
-include 'cpt_meta/result.php';
-include 'content/content.php';
+include 'PHP_Quiz_and_Metadata/Metadata/quiz.php';
+include 'PHP_Quiz_and_Metadata/Metadata/question.php';
+include 'PHP_Quiz_and_Metadata/Metadata/result.php';
+include 'PHP_Quiz_and_Metadata/content.php';
 
 ?>
