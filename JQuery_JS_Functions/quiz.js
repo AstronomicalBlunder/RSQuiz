@@ -133,7 +133,7 @@ function show_results(data){
 		 var score = data.substring(4);
 		 jQuery('#results_score').html('<div class="presserly_quiz_counter" data-count="'+ score + '">0%</div><h1 class="' + pass + ' passfail">' + pass + '!</h1>');
 		 
-		 var $this = jQuery('.presserly_quiz_counter'),
+		 var $this = jQuery('.quiz_counter'),
 		countTo = $this.attr('data-count');
   
 		jQuery({ countNum: $this.text()}).animate({
