@@ -529,15 +529,7 @@ function custom_orderby($query)
     }
 }
 
-/*Add a quick start link to the plugin's page*/
-function quiz_settings_link($links)
-{
-    $settings_link = '<a href="/wp-admin/edit.php?post_type=random-timed-quiz&page=get-started">' . __('Quick start guide') . '</a>';
-    array_push($links, $settings_link);
-    return $links;
-}
-$plugin = plugin_basename(__FILE__);
-add_filter("plugin_action_links_$plugin", 'presserly_quiz_settings_link');
+
 
 
 include 'PHP_Quiz_and_Metadata/Metadata/quiz.php';
