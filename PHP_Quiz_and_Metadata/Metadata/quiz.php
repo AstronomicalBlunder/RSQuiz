@@ -4,13 +4,13 @@
 
 
 /*meta boxes for quizzes*/
-function presserly_random_timed_quiz_add_meta_boxes( $post ){
-	add_meta_box( 'presserly_quiz_meta_box', __( 'Quiz settings', 'random-timed-quiz' ), 'presserly_quiz_build_meta_box', 'random-timed-quiz', 'normal', 'high' );	
+function quiz_add_meta_boxes( $post ){
+	add_meta_box( 'quiz_meta_box', __( 'Quiz settings', 'random-timed-quiz' ), 'build_meta_box', 'random-timed-quiz', 'normal', 'high' );	
 }
-add_action( 'add_meta_boxes_random-timed-quiz', 'presserly_random_timed_quiz_add_meta_boxes' );
+add_action( 'add_meta_boxes_random-timed-quiz', 'quiz_add_meta_boxes' );
 
-function presserly_quiz_build_meta_box( $post ){
-	wp_nonce_field( basename( __FILE__ ), 'presserly_quiz_build_meta_box_nonce' );
+function build_meta_box( $post ){
+	wp_nonce_field( basename( __FILE__ ), 'build_meta_box_nonce' );
 	
     $fields = presserly_quiz_fields();
   
@@ -127,8 +127,8 @@ function presserly_quiz_build_meta_box( $post ){
 <?php
 }
 
-function presserly_quiz_save_meta_boxes_data( $post_id ){
-	if ( !isset( $_POST['presserly_quiz_build_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['presserly_quiz_build_meta_box_nonce'], basename( __FILE__ ) ) ){
+function save_meta_boxes_data( $post_id ){
+	if ( !isset( $_POST['build_meta_box_nonce'] ) || !wp_verify_nonce( $_POST['build_meta_box_nonce'], basename( __FILE__ ) ) ){
 		return;
 	}
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
@@ -138,7 +138,7 @@ function presserly_quiz_save_meta_boxes_data( $post_id ){
 		return;
 	}	
   
-    $fields = presserly_quiz_fields();
+    $fields = quiz_fields();
 
     foreach ($fields as $field => $type){
 
@@ -146,11 +146,11 @@ function presserly_quiz_save_meta_boxes_data( $post_id ){
 		
 	}
 }
-add_action( 'save_post_random-timed-quiz', 'presserly_quiz_save_meta_boxes_data', 10, 2 );
+add_action( 'save_post_random-timed-quiz', 'save_meta_boxes_data', 10, 2 );
 
 
 /*core function to get quiz field array*/
-function presserly_quiz_fields(){
+function quiz_fields(){
 
 	$fields = array();
 
@@ -227,7 +227,7 @@ return $fields;
 
 
 /*change title field for cpts*/
-function presserly_random_quiz_quiz_title( $title ){
+function quiz_title( $title ){
      $screen = get_current_screen();
   
      if  ( 'random-timed-quiz' == $screen->post_type ) {
@@ -236,6 +236,6 @@ function presserly_random_quiz_quiz_title( $title ){
   
      return $title;
 } 
-add_filter( 'enter_title_here', 'presserly_random_quiz_quiz_title' );
+add_filter( 'enter_title_here', 'quiz_title' );
 
 ?>
