@@ -162,7 +162,7 @@ $userid = get_current_user_id();
 	jQuery.ajax({
 	type:"POST",
 	url: ajaxurl,
-	data: ({action : 'presserly_quiz_save_answer', question_id : question_id, answer_value : answer_value }),
+	data: ({action : 'save_answer', question_id : question_id, answer_value : answer_value }),
 	success:function(data){
 	
 		if(data.trim() == 'complete'){
@@ -194,7 +194,7 @@ $userid = get_current_user_id();
 		
 			var show = '<?php echo $meta['show_score_after_last_question_answered'][0]; ?>';		
 			if(show == 'on'){
-				presserly_quiz_show_results(data);
+				show_results(data);
 			}			
 		
 	}
