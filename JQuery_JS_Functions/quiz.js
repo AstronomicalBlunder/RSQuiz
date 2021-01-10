@@ -92,7 +92,7 @@ function initializeClock(id, endtime) {
  var redalert = jQuery('#red_alert_seconds').val();
  
 
-  function presserly_quiz_updateClock() {
+  function updateClock() {
     var t = getTimeRemaining(endtime);
 
     daysSpan.innerHTML = t.days;
@@ -109,9 +109,9 @@ function initializeClock(id, endtime) {
 	
   }
   
-  timeinterval = setInterval(presserly_quiz_updateClock, 1000);
+  timeinterval = setInterval(updateClock, 1000);
 
-  presserly_quiz_updateClock();sta
+  updateClock();
 }
 
 
@@ -125,7 +125,7 @@ function quiz_over(redirect){
 }
 
 
-function presserly_quiz_show_results(data){
+function show_results(data){
 		
 		//presserly_show_test_score
 		data = data.trim();
