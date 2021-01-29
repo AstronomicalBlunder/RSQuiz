@@ -202,7 +202,7 @@ $userid = get_current_user_id();
 	
 	}
 	
-	function presserly_start_quiz(){
+	function start_quiz(){
 
 	var id = '<?php echo $post->ID; ?>';
 	var questions = '<?php echo count($questions); ?>';
@@ -213,7 +213,7 @@ $userid = get_current_user_id();
 	jQuery.ajax({
 	type:"POST",
 	url: ajaxurl,
-	data: ({action : 'presserly_start_quiz', id : id, questions : questions }),
+	data: ({action : 'start_quiz', id : id, questions : questions }),
 	success:function(data){
 		
 		jQuery('#results').prepend('<?php echo $qhtml;?>');
