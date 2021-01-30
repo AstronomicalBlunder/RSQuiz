@@ -194,7 +194,7 @@ function save_quiz()
     $current_user = wp_get_current_user();
     $user_id = $current_user->ID;
     
-    $score_correct = presserly_quiz_get_quiz_score($_SESSION['quiz_qanda']);
+    $score_correct = get_quiz_score($_SESSION['quiz_qanda']);
     
     $percentage_score = 100 / $_SESSION['quiz_qanda']['quiz_total_qs'] * $score_correct;
     
@@ -300,7 +300,7 @@ function quiz_results_sc()
     } else {
         $data = 'void0';
     }
-    $html = '<div id="results_score"></div><script>jQuery(function() {presserly_quiz_show_results(\'' . $data . '\');});</script>';
+    $html = '<div id="results_score"></div><script>jQuery(function() {show_results(\'' . $data . '\');});</script>';
     
     return $html;
 }
