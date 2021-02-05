@@ -116,7 +116,7 @@ $userid = get_current_user_id();
 
 	<?php
 	
-	echo '<input type="button" class="start_quiz" style="background-color: #'. $meta['main_colour'][0] .';border:2px solid #'. $meta['secondary_colour'][0] .'" value="start the quiz" onclick="presserly_quiz_start_quiz_timer(\''.$meta['quiz_duration_in_minutes'][0].'\');" />';
+	echo '<input type="button" class="start_quiz" style="background-color: #'. $meta['main_colour'][0] .';border:2px solid #'. $meta['secondary_colour'][0] .'" value="start the quiz" onclick="start_quiz_timer(\''.$meta['quiz_duration_in_minutes'][0].'\');" />';
 	
 	/*build question list*/
 	$questions = array();
